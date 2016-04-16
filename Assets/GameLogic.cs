@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour {
 
-	public Pattern m_pattern;
+	public VoterGrid voterGrid;
+	public List<Player> playerList;
+	public Player activePlayer;
 
 	// Use this for initialization
 	void Start () {
-		m_pattern = new Pattern();
-		float size = m_pattern.getSize();
+		voterGrid = new VoterGrid();
+		float size = voterGrid.getSize();
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().setZoom();
 	}
 	

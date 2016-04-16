@@ -2,12 +2,12 @@
 using System.Collections;
 using System;
 
-public class Pattern {
+public class VoterGrid {
 	public int x = 10;
 	public int y = 10;
 	public double rel = 0.6;
 	private string name_obj;
-	public Voter_obj[,] array;
+	public Voter[,] array;
 
 	private Sprite sprite1;
 	private Sprite sprite2;
@@ -15,13 +15,13 @@ public class Pattern {
 	private SpriteRenderer rend;
 
 	// Use this for initialization
-	public Pattern () {
+	public VoterGrid () {
 		loadSprites ();
-		array = new Voter_obj[x,y];
+		array = new Voter[x,y];
 		System.Random rnd = new System.Random ();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				array[i,j] = new Voter_obj((float)(i*sprite_size),(float)(j*sprite_size), sprite_size);
+				array[i,j] = new Voter((float)(i*sprite_size),(float)(j*sprite_size), sprite_size);
 				rend = array[i,j].gameobj.GetComponent<SpriteRenderer> ();
 				if (rnd.NextDouble () < rel) {
 					rend.sprite = sprite1;

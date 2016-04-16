@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void setActiveColor() {
-		GameObject.Find ("active").GetComponent<Text> ().color = new Color(1,1,0);
+		GameObject.Find ("ActiveDistrict").GetComponent<Image> ().color = new Color(1,1,0);
 	}
 
 
