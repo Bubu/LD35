@@ -3,8 +3,8 @@ using System.Collections;
 using System;
 
 public class Pattern : MonoBehaviour {
-	public int x = 2;
-	public int y = 2;
+	public int x = 10;
+	public int y = 10;
 	public double rel = 0.6;
 	private string name_obj;
 
@@ -20,7 +20,7 @@ public class Pattern : MonoBehaviour {
 		Voter_obj[,] array = new Voter_obj[x,y];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				array[i,j] = new Voter_obj((float)i,(float)j);
+				array[i,j] = new Voter_obj((float)(i*sprite_size),(float)(j*sprite_size), sprite_size);
 				rend = array[i,j].gameobj.GetComponent<SpriteRenderer> ();
 				if (rnd.NextDouble () < rel) {
 					rend.sprite = sprite1;
