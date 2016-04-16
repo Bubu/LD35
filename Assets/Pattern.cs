@@ -7,6 +7,7 @@ public class Pattern : MonoBehaviour {
 	public int y = 10;
 	public double rel = 0.6;
 	private string name_obj;
+	public Voter_obj[,] array;
 
 	public Sprite sprite1;
 	public Sprite sprite2;
@@ -16,8 +17,8 @@ public class Pattern : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		setSprites ();
+		array = new Voter_obj[x,y];
 		System.Random rnd = new System.Random ();
-		Voter_obj[,] array = new Voter_obj[x,y];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
 				array[i,j] = new Voter_obj((float)(i*sprite_size),(float)(j*sprite_size), sprite_size);
@@ -44,4 +45,6 @@ public class Pattern : MonoBehaviour {
 	void Update () {
 			
 	}
+
+		
 }
