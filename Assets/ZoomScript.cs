@@ -16,8 +16,7 @@ public class ZoomScript : MonoBehaviour {
 	void Start () {
 		m_camera = GetComponent<Camera>();
 		m_slider = GameObject.Find("ZoomSlider").GetComponent<Slider>();
-		m_camera.orthographicSize = (1-m_slider.value) * minZoom + (m_slider.value) * maxZoom;
-
+		//m_camera.orthographicSize = (1-m_slider.value) * minZoom + (m_slider.value) * maxZoom;
 	}
 	
 	// Update is called once per frame

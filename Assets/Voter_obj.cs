@@ -13,6 +13,7 @@ public class Voter_obj {
 		gameobj.transform.localScale = new Vector3 (size, size, 1);
 		gameobj.AddComponent<SpriteRenderer> ();
 		gameobj.AddComponent<BoxCollider2D> ();
+		gameobj.GetComponent<BoxCollider2D>().offset = new Vector2(0.5f,0.5f);
 		gameobj.AddComponent<GetMoBuUp> ();
 	}
 

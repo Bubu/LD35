@@ -2,21 +2,21 @@
 using System.Collections;
 using System;
 
-public class Pattern : MonoBehaviour {
+public class Pattern {
 	public int x = 10;
 	public int y = 10;
 	public double rel = 0.6;
 	private string name_obj;
 	public Voter_obj[,] array;
 
-	public Sprite sprite1;
-	public Sprite sprite2;
+	private Sprite sprite1;
+	private Sprite sprite2;
 	public int sprite_size = 100;
 	private SpriteRenderer rend;
 
 	// Use this for initialization
-	void Start () {
-		setSprites ();
+	public Pattern () {
+		loadSprites ();
 		array = new Voter_obj[x,y];
 		System.Random rnd = new System.Random ();
 		for (int i = 0; i < x; i++) {
@@ -33,18 +33,16 @@ public class Pattern : MonoBehaviour {
 		}
 	}
 
-	public void setSprites(){
-		Sprite sprite3 = new Sprite ();
-		sprite3 = Sprite.Create (sprite1.texture, new Rect (0, 0, sprite_size, sprite_size), new Vector2 (0, 0), 1);
-		Sprite sprite4 = new Sprite ();
-		sprite4 = Sprite.Create (sprite2.texture, new Rect (0, 0, sprite_size, sprite_size), new Vector2 (0, 0), 1);
+	public void loadSprites(){
+		Texture2D tex1 = Resources.Load<Texture2D>("sprite_a");
+		Texture2D tex2 = Resources.Load<Texture2D>("sprite_b");
+		sprite1 = Sprite.Create(tex1,new Rect(0,0,100,100),new Vector2(0,0),100);
+		sprite2 = Sprite.Create(tex2,new Rect(0,0,100,100),new Vector2(0,0),100);
 	}
 		
 
-	// Update is called once per frame
-	void Update () {
-			
+	public float getSize(){
+		return x * sprite_size;
 	}
-
 		
 }
