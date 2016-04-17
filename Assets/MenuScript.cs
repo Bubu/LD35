@@ -30,7 +30,7 @@ public class MenuScript : MonoBehaviour {
 		SceneManager.LoadScene("menu");
 	}
 	public void showInstructions() {
-		SceneManager.LoadScene("instructions");
+		SceneManager.LoadScene("story");
 	}
 
 }

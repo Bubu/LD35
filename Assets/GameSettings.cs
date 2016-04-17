@@ -15,6 +15,7 @@ public class GameSettings : MonoBehaviour {
 	public List<Player> playerList;
 	public int curPlayerIndex;
 	public Button startButton;
+	public int mode;
 
 	// Use this for initialization
 	void Start () {
@@ -73,5 +74,10 @@ public class GameSettings : MonoBehaviour {
 	public void setR() {
 		ratio = gridSliderRatio.value/20;
 		gridSliderRatioText.text = "Ratio: " + ratio;
+	}
+	public void setMode(int mode) {
+		// 0 = vs AI
+		// 1 = PvP
+		this.mode = mode;
 	}
 }
