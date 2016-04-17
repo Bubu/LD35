@@ -11,6 +11,8 @@ public class GameLogic : MonoBehaviour {
 	public List<District> districtList;
 	public District activeDistrict;
 
+
+
 	// Use this for initialization
 	void Start () {
 		voterGrid = new VoterGrid();
