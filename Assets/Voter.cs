@@ -28,6 +28,7 @@ public class Voter {
 		gameobj.transform.position = new Vector3 ((float)x*size, (float)y*size, 0);
 		gameobj.transform.localScale = new Vector3 (size, size, 1);
 		rend = gameobj.AddComponent<SpriteRenderer> ();
+		this.player = player;
 		col = x;
 		row = y;
 		rend.sprite = player.sprite;

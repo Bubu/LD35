@@ -24,8 +24,7 @@ public class District {
 
 	public void updateCount(Voter voter){
 		voterList.Add (voter);
-
-		counterList [0] += 1;
+		counterList [voter.player.index] += 1;
 		string scoreText = "" + counterList[0];
 		foreach (var count in counterList.Skip(1)) {
 			scoreText += " / " + count;
