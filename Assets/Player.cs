@@ -8,7 +8,6 @@ public class Player {
 
 	public Player(int index) {
 		this.index = index;
-		//this.sprite = sprite;
 	}
 
 

@@ -18,6 +18,7 @@ public class Voter {
 		gameobj.AddComponent<BoxCollider2D> ();
 		gameobj.GetComponent<BoxCollider2D>().offset = new Vector2(0.5f,0.5f);
 		VoterScript voterscript = gameobj.AddComponent<VoterScript> ();
+		this.player = player;
 		voterscript.voter = this;
 		col = x;
 		row = y;

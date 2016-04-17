@@ -11,15 +11,13 @@ public class GameLogic : MonoBehaviour {
 	public List<District> districtList;
 	public District activeDistrict;
 	public int x;
-	public int y;
-
-
+	public GameSettings gs;
 
 	// Use this for initialization
 	void Start () {
-		playerList = GameObject.Find("Initialize").GetComponent<GameSettings>().playerList;
-		x = GameObject.Find("Initialize").GetComponent<GameSettings>().x;
-		y = GameObject.Find("Initialize").GetComponent<GameSettings>().y;
+		gs = GameObject.Find ("Initialize").GetComponent<GameSettings> ();
+		playerList = gs.playerList;
+		x = gs.x;
 		voterGrid = new VoterGrid();
 		districtList = new List<District> ();
 		float size = GameConfig.Instance.sprite_size * x;
@@ -38,7 +36,6 @@ public class GameLogic : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	public void activateDistrict(int index){
