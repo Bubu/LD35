@@ -23,12 +23,13 @@ public class GameSettings : MonoBehaviour {
 	void Update () {
 	
 	}
+		
 
-	public void setCurPlayerIndex(int index){
-		curPlayerIndex = 
+	public void setPlayer0Animal(int spriteIndex){
+		playerList[0].sprite = GameConfig.Instance.spriteList[spriteIndex];
 	}
 
-	public void setPlayerAnimal(int[] list){
-		playerList[list[0]].sprite = GameConfig.Instance.spriteList[list[1]];
+	public void setPlayer1Animal(int spriteIndex){
+		playerList[1].sprite = GameConfig.Instance.spriteList[spriteIndex];
 	}
 }
