@@ -9,7 +9,7 @@ public class Voter {
 	public District district;
 	public Player player;
 
-	public Voter (int x, int y, int size) {
+	public Voter (int x, int y, int size, Player player) {
 		gameobj = new GameObject ();
 		gameobj.name = "Sprite (" + x + "," + y + ")";
 		gameobj.transform.position = new Vector3 ((float)x*size, (float)y*size, 0);
@@ -21,6 +21,10 @@ public class Voter {
 		voterscript.voter = this;
 		col = x;
 		row = y;
+
+		SpriteRenderer rend = gameobj.GetComponent<SpriteRenderer> ();
+		rend.sprite = player.sprite;
+
 	}
 
 

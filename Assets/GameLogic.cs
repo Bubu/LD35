@@ -15,6 +15,7 @@ public class GameLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		playerList = GameObject.Find("Initialize").GetComponent<GameSettings>().playerList;
 		voterGrid = new VoterGrid();
 		districtList = new List<District> ();
 		float size = voterGrid.getSize();

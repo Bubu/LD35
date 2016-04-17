@@ -14,23 +14,23 @@ public class VoterGrid {
 
 	private Sprite sprite1;
 	private Sprite sprite2;
+	GameLogic gl;
 
 	private SpriteRenderer rend;
 
 	// Use this for initialization
 	public VoterGrid () {
-		loadSprites ();
+		
+		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic>();
 		array = new Voter[x,y];
 		System.Random rnd = new System.Random ();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				array[i,j] = new Voter(i,j,sprite_size);
-				rend = array[i,j].gameobj.GetComponent<SpriteRenderer> ();
 				if (rnd.NextDouble () < rel) {
-					rend.sprite = sprite1;
+					array[i,j] = new Voter(i,j,sprite_size, gl.playerList[0]);
 				}
 				else {
-					rend.sprite = sprite2;
+					array[i,j] = new Voter(i,j,sprite_size, gl.playerList[1]);
 				}
 			}
 		}
