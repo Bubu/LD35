@@ -6,13 +6,16 @@ using System;
 
 public class GameSettings : MonoBehaviour {
 
-	public int x = 7;
+	public Slider gridSlider;
+	public int x;
 	public List<Player> playerList;
 	public int curPlayerIndex;
 	public Button startButton;
 
 	// Use this for initialization
 	void Start () {
+		//gridSlider = GameObject.Find ("SliderGridSize").GetComponent<Slider>();
+		//x = (int)gridSlider.value;
 		playerList = new List<Player>();
 		playerList.Add (new Player (0));
 		playerList.Add (new Player (1));
@@ -23,7 +26,7 @@ public class GameSettings : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 		
 
