@@ -7,8 +7,11 @@ public class GameConfig
 	public static GameConfig instance;
 	private GameConfig (){	
 		spriteList = new List<Sprite> (new Sprite [] {
-			loadSprites ("sprite_a"),
-			loadSprites ("sprite_b")
+			loadSprites ("elephant"),
+			loadSprites ("bunny"),
+			loadSprites ("wolf"),
+			loadSprites ("sheep"),
+			loadSprites ("lion")
 		});}
 	public static GameConfig Instance {
 		get {

@@ -10,9 +10,7 @@ public class ZoomScript : MonoBehaviour {
 	private int pan_speed = 10;
 	private Slider m_slider;
 	private Vector3 lastPosition;
-	private float mouseSensitivity = 5.0f;
-	private Vector2 minPan;
-	private Vector2 maxPan;
+	private float m_size;
 
 	// Use this for initialization
 	void Start () {
@@ -42,16 +40,19 @@ public class ZoomScript : MonoBehaviour {
 		if (Input.GetMouseButton(0) && !(EventSystem.current.currentSelectedGameObject == m_slider.gameObject))
 		{
 			Vector3 delta = Input.mousePosition - lastPosition;
-			transform.Translate(-delta.x * mouseSensitivity, -delta.y * mouseSensitivity, 0);
+			transform.position = new Vector3(
+				Mathf.Clamp(transform.position.x - delta.x,m_camera.orthographicSize,m_size + (m_size- m_camera.orthographicSize)),
+				Mathf.Clamp(transform.position.y - delta.y,m_camera.orthographicSize,m_size + (m_size- m_camera.orthographicSize)),
+				transform.position.z);
 			lastPosition = Input.mousePosition;
 		}
 	}
 
 	public void zoomTo(float size){
-		m_camera.orthographicSize = size/2-3;
+		m_camera.orthographicSize = size/2;
 		transform.position = new Vector3(size/2,size/2,transform.position.z);
 		maxZoomOut = (int)(size/2)-3;
-		minPan = new Vector2(size/2,size/2);
+		m_size = size/2;
 	}
 
 	public void setZoom(){

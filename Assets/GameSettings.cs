@@ -16,7 +16,7 @@ public class GameSettings : MonoBehaviour {
 		playerList = new List<Player>();
 		playerList.Add (new Player (0));
 		playerList.Add (new Player (1));
-	
+		DontDestroyOnLoad (this);
 	}
 	
 	// Update is called once per frame
