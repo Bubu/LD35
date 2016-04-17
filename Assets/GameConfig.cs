@@ -35,12 +35,13 @@ public class GameConfig
 
 	public Sprite loadSprites(String spriteName){
 		Texture2D tex = Resources.Load<Texture2D>(spriteName);
-		int sprite_size = tex.width;
+		sprite_size = tex.width;
 		Sprite sprite = Sprite.Create(tex,new Rect(0,0,sprite_size,sprite_size),new Vector2(0,0),sprite_size);
 		return sprite;
 	}
 
 	public List<Sprite> spriteList;
+	public int sprite_size;
 
 
 }

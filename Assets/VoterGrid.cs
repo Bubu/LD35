@@ -39,6 +39,7 @@ public class VoterGrid {
 	public void loadSprites(){
 		sprite1 = GameConfig.Instance.spriteList[0];
 		sprite2 = GameConfig.Instance.spriteList[1];
+		sprite_size = GameConfig.Instance.sprite_size;
 	}
 		
 
