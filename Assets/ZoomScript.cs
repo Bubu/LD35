@@ -6,11 +6,13 @@ using System.Collections;
 public class ZoomScript : MonoBehaviour {
 	private Camera m_camera;
 	private int minZoom = 300;
-	private int maxZoom = 3500;
+	private int maxZoomOut = 3500;
 	private int pan_speed = 10;
 	private Slider m_slider;
 	private Vector3 lastPosition;
 	private float mouseSensitivity = 5.0f;
+	private Vector2 minPan;
+	private Vector2 maxPan;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +27,7 @@ public class ZoomScript : MonoBehaviour {
 		float hor = Input.GetAxisRaw("Horizontal");
 		float vert = Input.GetAxisRaw("Vertical");
 		if (sroll_wheel != 0f){
-			m_camera.orthographicSize = Mathf.Clamp(m_camera.orthographicSize + sroll_wheel, minZoom, maxZoom);
+			m_camera.orthographicSize = Mathf.Clamp(m_camera.orthographicSize + sroll_wheel, minZoom, maxZoomOut);
 			//m_slider.value = Mathf.Clamp(m_camera.orthographicSize + sroll_wheel, minZoom, maxZoom)/maxZoom;
 		}
 		if(hor != 0f || vert != 0f){
@@ -45,13 +47,14 @@ public class ZoomScript : MonoBehaviour {
 		}
 	}
 
-	public void zoomTo(Vector2 coords, float size){
+	public void zoomTo(float size){
 		m_camera.orthographicSize = size/2-3;
 		transform.position = new Vector3(size/2,size/2,transform.position.z);
-		maxZoom = (int)(size/2)-3;
+		maxZoomOut = (int)(size/2)-3;
+		minPan = new Vector2(size/2,size/2);
 	}
 
 	public void setZoom(){
-		m_camera.orthographicSize = (1-m_slider.value) * minZoom + (m_slider.value) * maxZoom;
+		m_camera.orthographicSize = (1-m_slider.value) * minZoom + (m_slider.value) * maxZoomOut;
 	}
 }
