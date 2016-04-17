@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player {
 
-	// Use this for initialization
-	void Start () {
-	
+	public int index;
+	public Sprite sprite;
+
+
+	public Player(int index, Sprite sprite) {
+		this.index = index;
+		this.sprite = sprite;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+
+
 }

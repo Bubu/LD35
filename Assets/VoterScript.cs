@@ -25,7 +25,6 @@ public class VoterScript : MonoBehaviour {
 					addToDistrict ();
 				}
 			}
-			 
 		}
 	}
 
@@ -33,6 +32,6 @@ public class VoterScript : MonoBehaviour {
 		SpriteRenderer renderer = GetComponent<SpriteRenderer> ();
 		renderer.color = gl.activeDistrict.color;
 		voter.district = gl.activeDistrict;
-		gl.activeDistrict.voterList.Add (voter);
+		voter.district.updateCount (voter);
 	}
 }

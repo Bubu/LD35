@@ -21,8 +21,10 @@ public class GameLogic : MonoBehaviour {
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().setZoom();
 		for (int index = 0; index < GameConfig.Instance.numberOfDistricts; index++) {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
+			GameObject textBox = GameObject.Find ("Score" + index);
+
 			button.SetActive (true);
-			districtList.Add(new District("District" + index, GameConfig.Instance.colorList[index]));
+			districtList.Add(new District("District" + index, textBox, GameConfig.Instance.colorList[index]));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
 	}

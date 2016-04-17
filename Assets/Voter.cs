@@ -7,7 +7,7 @@ public class Voter {
 	private BoxCollider2D box;
 	public int row, col;
 	public District district;
-	//public Player player;
+	public Player player;
 
 	public Voter (int x, int y, int size) {
 		gameobj = new GameObject ();
