@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 
 public class VoterGrid {
-	public double rel = 0.5;
 	private string name_obj;
 	public Voter[,] array;
 	GameLogic gl;
@@ -18,14 +17,25 @@ public class VoterGrid {
 		array = new Voter[gl.x, gl.x];
 		System.Random rnd = new System.Random ();
 		int sprite_size = GameConfig.Instance.sprite_size;
+		int numFirstAnimal = (int) Math.Round (gl.ratio * Math.Pow(gl.x,2));
+		int numSecondAnimal = (int) Math.Pow(gl.x,2) - numFirstAnimal;
+		List<int> voterList = new List<int> ();
+
+		for (int i = 0; i < numFirstAnimal; i++)
+			voterList.Add (0);
+		for (int i = 0; i < numSecondAnimal; i++)
+			voterList.Add (1);
+
+		int remainingVoters = (int) Math.Pow(gl.x,2);
+
 		for (int i = 0; i < gl.x; i++) {
 			for (int j = 0; j < gl.x; j++) {
-				if (rnd.NextDouble () < rel) {
-					array[i,j] = new Voter(i,j, sprite_size, gl.playerList[0]);
-				}
-				else {
-					array[i,j] = new Voter(i,j, sprite_size, gl.playerList[1]);
-				}
+
+				int listIndex = rnd.Next(0, remainingVoters);
+				int playerIndex = voterList[listIndex];
+				voterList.RemoveAt (listIndex);
+				array[i,j] = new Voter(i,j, sprite_size, gl.playerList[playerIndex]);
+				remainingVoters--;
 			}
 		}
 	}

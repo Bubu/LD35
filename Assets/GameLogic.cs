@@ -11,6 +11,7 @@ public class GameLogic : MonoBehaviour {
 	public List<District> districtList;
 	public District activeDistrict;
 	public int x;
+	public double ratio;
 	public GameSettings gs;
 
 	// Use this for initialization
@@ -18,6 +19,7 @@ public class GameLogic : MonoBehaviour {
 		gs = GameObject.Find ("Initialize").GetComponent<GameSettings> ();
 		playerList = gs.playerList;
 		x = gs.x;
+		ratio = gs.ratio;
 		voterGrid = new VoterGrid();
 		districtList = new List<District> ();
 		float size = GameConfig.Instance.sprite_size * x;

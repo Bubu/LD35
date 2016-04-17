@@ -5,13 +5,23 @@ using System.Collections.Generic;
 using System;
 
 public class GameSettings : MonoBehaviour {
-	public int x = 7;
+
+	public Slider gridSlider;
+	public Slider gridSliderRatio;
+	public Text gridSliderText;
+	public Text gridSliderRatioText;
+	public int x;
+	public double ratio;
 	public List<Player> playerList;
 	public int curPlayerIndex;
 	public Button startButton;
 
 	// Use this for initialization
 	void Start () {
+		gridSlider = GameObject.Find ("SliderGridSize").GetComponent<Slider>();
+		gridSliderRatio = GameObject.Find ("SliderGridRatio").GetComponent<Slider>();
+		gridSliderText = GameObject.Find ("TextSliderGridSize").GetComponent<Text>();
+		gridSliderRatioText = GameObject.Find ("TextSliderRatio").GetComponent<Text>();
 		playerList = new List<Player>();
 		playerList.Add (new Player (0));
 		playerList.Add (new Player (1));
@@ -22,7 +32,7 @@ public class GameSettings : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 		
 
@@ -53,5 +63,15 @@ public class GameSettings : MonoBehaviour {
 		if (playerList [0].sprite) {
 			startButton.interactable = true;
 		}
+	}
+
+	public void setX() {
+		x = (int)gridSlider.value;
+		gridSliderText.text = "Gridsize: " + x;
+	}
+
+	public void setR() {
+		ratio = gridSliderRatio.value/20;
+		gridSliderRatioText.text = "Ratio: " + ratio;
 	}
 }
