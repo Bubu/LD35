@@ -17,11 +17,11 @@ public class GameConfig
 
 	public int numberOfDistricts = 5;
 	public List<Color> colorList = new List<Color> (new Color [] {
-		new Color (0.886f,0.29f,0.349f),
-		new Color (0.918f,0.745f,0.302f),
-		new Color (0.263f,0.306f,0.631f),
-		new Color (0.341f,0.765f,0.251f),
-		new Color (0.431f,0.235f,0.62f),
+		new Color (47f/255f,86f/255f,131f/255f),
+		new Color (119f/255f,143f/255f,168f/255f),
+		new Color (201f/255f,24f/255f,24f/255f),
+		new Color (207f/255f,153f/255f,153f/255f),
+		new Color (1f,225f/255f,162f/255f),
 		new Color (0.918f,0.616f,0.302f),
 		new Color (0.204f,0.482f,0.573f)
 	});
