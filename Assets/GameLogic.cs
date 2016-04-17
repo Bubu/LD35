@@ -10,19 +10,24 @@ public class GameLogic : MonoBehaviour {
 	public Player activePlayer;
 	public List<District> districtList;
 	public District activeDistrict;
+	public int x;
+	public int y;
 
 
 
 	// Use this for initialization
 	void Start () {
+		GameSettings gs = GameObject.Find("Initialize").GetComponent<GameSettings>();
+		playerList = gs.playerList;
+		x = gs.x;
+		y = gs.y;
 		voterGrid = new VoterGrid();
 		districtList = new List<District> ();
-		float size = voterGrid.getSize();
+		float size = GameConfig.Instance.sprite_size * x;
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().zoomTo(size);
 		for (int index = 0; index < GameConfig.Instance.numberOfDistricts; index++) {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
 			GameObject textBox = GameObject.Find ("Score" + index);
-
 			button.SetActive (true);
 			districtList.Add(new District("District" + index, textBox, GameConfig.Instance.colorList[index]));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];

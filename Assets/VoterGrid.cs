@@ -9,44 +9,29 @@ public class VoterGrid {
 	public double rel = 0.5;
 	private string name_obj;
 	public Voter[,] array;
-
-	public int sprite_size;
-
-	private Sprite sprite1;
-	private Sprite sprite2;
+	GameLogic gl;
 
 	private SpriteRenderer rend;
 
 	// Use this for initialization
 	public VoterGrid () {
-		loadSprites ();
+		
+		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic>();
 		array = new Voter[x,y];
 		System.Random rnd = new System.Random ();
+		int sprite_size = GameConfig.Instance.sprite_size;
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				array[i,j] = new Voter(i,j,sprite_size);
-				rend = array[i,j].gameobj.GetComponent<SpriteRenderer> ();
 				if (rnd.NextDouble () < rel) {
-					rend.sprite = sprite1;
+					array[i,j] = new Voter(i,j, sprite_size, gl.playerList[0]);
 				}
 				else {
-					rend.sprite = sprite2;
+					array[i,j] = new Voter(i,j, sprite_size, gl.playerList[1]);
 				}
 			}
 		}
 	}
-
-	public void loadSprites(){
-		sprite1 = GameConfig.Instance.spriteList[0];
-		sprite2 = GameConfig.Instance.spriteList[1];
-		sprite_size = GameConfig.Instance.sprite_size;
-	}
 		
-
-	public float getSize(){
-		return x * sprite_size;
-	}
-
 	public List<Voter> getNeighbors(int pos_x, int pos_y) {
 		List<Voter> list = new List<Voter>();
 
