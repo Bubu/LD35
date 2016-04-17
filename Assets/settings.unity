@@ -162,11 +162,22 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 2
   m_MaxValue: 50
-  m_WholeNumbers: 0
-  m_Value: 2
+  m_WholeNumbers: 1
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 113242620}
+        m_MethodName: setX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &5049762
@@ -322,7 +333,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484d77a2de48c0f4da847f03575461f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 50
+  gridSlider: {fileID: 0}
+  gridSliderRatio: {fileID: 0}
+  gridSliderText: {fileID: 0}
+  gridSliderRatioText: {fileID: 0}
+  x: 6
+  ratio: 0
   curPlayerIndex: 0
   startButton: {fileID: 0}
 --- !u!4 &113242621
@@ -643,7 +659,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'GridSize = '
+  m_Text: 'Gridsize: 6 '
 --- !u!222 &222293036
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2816,7 +2832,7 @@ GameObject:
   - 222: {fileID: 1096313794}
   - 114: {fileID: 1096313793}
   m_Layer: 5
-  m_Name: TextSliderRelation
+  m_Name: TextSliderRatio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2871,7 +2887,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Relation
+  m_Text: 'Ratio: 0,5'
 --- !u!222 &1096313794
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5322,7 +5338,7 @@ GameObject:
   - 224: {fileID: 2140388541}
   - 114: {fileID: 2140388542}
   m_Layer: 5
-  m_Name: SliderRelation
+  m_Name: SliderGridRatio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5388,11 +5404,22 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1558363603}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0
+  m_MaxValue: 20
+  m_WholeNumbers: 1
+  m_Value: 10
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 113242620}
+        m_MethodName: setR
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null

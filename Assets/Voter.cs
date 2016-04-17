@@ -4,28 +4,34 @@ using System.Collections;
 public class Voter {
 	
 	public GameObject gameobj;
+	public GameObject bgobj;
 	private BoxCollider2D box;
 	public int row, col;
 	public District district;
 	public Player player;
 
 	public Voter (int x, int y, int size, Player player) {
+		bgobj = new GameObject();
+		bgobj.name = "BG (" + x + "," + y + ")";
+		bgobj.transform.position = new Vector3 ((float)x*size, (float)y*size, 0);
+		bgobj.transform.localScale = new Vector3 (size, size, 1);
+		SpriteRenderer rend = bgobj.AddComponent<SpriteRenderer> ();
+		rend.sprite = GameConfig.Instance.bgSprite;
+		rend.sortingOrder = -1;
+		bgobj.AddComponent<BoxCollider2D> ();
+		bgobj.GetComponent<BoxCollider2D>().offset = new Vector2(0.5f,0.5f);
+		VoterScript voterscript = bgobj.AddComponent<VoterScript> ();
+		voterscript.voter = this;
+
 		gameobj = new GameObject ();
 		gameobj.name = "Sprite (" + x + "," + y + ")";
 		gameobj.transform.position = new Vector3 ((float)x*size, (float)y*size, 0);
 		gameobj.transform.localScale = new Vector3 (size, size, 1);
-		gameobj.AddComponent<SpriteRenderer> ();
-		gameobj.AddComponent<BoxCollider2D> ();
-		gameobj.GetComponent<BoxCollider2D>().offset = new Vector2(0.5f,0.5f);
-		VoterScript voterscript = gameobj.AddComponent<VoterScript> ();
+		rend = gameobj.AddComponent<SpriteRenderer> ();
 		this.player = player;
-		voterscript.voter = this;
 		col = x;
 		row = y;
-
-		SpriteRenderer rend = gameobj.GetComponent<SpriteRenderer> ();
 		rend.sprite = player.sprite;
-
 	}
 
 
