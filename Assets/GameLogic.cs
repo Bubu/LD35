@@ -16,7 +16,7 @@ public class GameLogic : MonoBehaviour {
 		voterGrid = new VoterGrid();
 		districtList = new List<District> ();
 		float size = voterGrid.getSize();
-		GameObject.Find("Main Camera").GetComponent<ZoomScript>().setZoom();
+		GameObject.Find("Main Camera").GetComponent<ZoomScript>().zoomTo(new Vector2(0,0),size);
 		for (int index = 0; index < GameConfig.Instance.numberOfDistricts; index++) {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
 			button.SetActive (true);

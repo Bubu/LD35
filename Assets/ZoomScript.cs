@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ZoomScript : MonoBehaviour {
 	private Camera m_camera;
-	private int minZoom = 500;
+	private int minZoom = 300;
 	private int maxZoom = 3500;
 	private int pan_speed = 10;
 	private Slider m_slider;
@@ -43,6 +43,12 @@ public class ZoomScript : MonoBehaviour {
 			transform.Translate(-delta.x * mouseSensitivity, -delta.y * mouseSensitivity, 0);
 			lastPosition = Input.mousePosition;
 		}
+	}
+
+	public void zoomTo(Vector2 coords, float size){
+		m_camera.orthographicSize = size/2-3;
+		transform.position = new Vector3(size/2,size/2,transform.position.z);
+		maxZoom = (int)(size/2)-3;
 	}
 
 	public void setZoom(){
