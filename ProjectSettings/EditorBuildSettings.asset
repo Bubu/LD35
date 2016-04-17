@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/game.unity
   - enabled: 1
     path: Assets/instructions.unity
+  - enabled: 1
+    path: Assets/settings.unity
