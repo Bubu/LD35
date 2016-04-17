@@ -7,12 +7,14 @@ public class GameConfig
 	public static GameConfig instance;
 	private GameConfig (){	
 		spriteList = new List<Sprite> (new Sprite [] {
-			loadSprites ("elephant"),
-			loadSprites ("bunny"),
-			loadSprites ("wolf"),
-			loadSprites ("sheep"),
-			loadSprites ("lion")
-		});}
+			loadSprite ("elephant"),
+			loadSprite ("bunny"),
+			loadSprite ("wolf"),
+			loadSprite ("sheep"),
+			loadSprite ("lion")
+		});
+		bgSprite = loadSprite("grid");
+	}
 	public static GameConfig Instance {
 		get {
 			if (instance == null) {
@@ -33,7 +35,7 @@ public class GameConfig
 		new Color (0.204f,0.482f,0.573f)
 	});
 
-	public Sprite loadSprites(String spriteName){
+	public Sprite loadSprite(String spriteName){
 		Texture2D tex = Resources.Load<Texture2D>(spriteName);
 		sprite_size = tex.width;
 		Sprite sprite = Sprite.Create(tex,new Rect(0,0,sprite_size,sprite_size),new Vector2(0,0),sprite_size);
@@ -42,6 +44,7 @@ public class GameConfig
 
 	public List<Sprite> spriteList;
 	public int sprite_size;
+	public Sprite bgSprite;
 
 
 }
