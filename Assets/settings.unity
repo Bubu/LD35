@@ -338,7 +338,7 @@ MonoBehaviour:
   gridSliderText: {fileID: 0}
   gridSliderRatioText: {fileID: 0}
   x: 6
-  ratio: 0
+  ratio: 0.5
   curPlayerIndex: 0
   startButton: {fileID: 0}
 --- !u!4 &113242621

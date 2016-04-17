@@ -20,9 +20,6 @@ public class MenuScript : MonoBehaviour {
 	public void startGame() {
 		SceneManager.LoadScene("game");
 	}
-	public void startSettings() {
-		SceneManager.LoadScene("settings");
-	}
 	public void quitGame() {
 		Application.Quit();
 	}
