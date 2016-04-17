@@ -10,7 +10,6 @@ public class ZoomScript : MonoBehaviour {
 	private int pan_speed = 10;
 	private Slider m_slider;
 	private Vector3 lastPosition;
-	private float mouseSensitivity = 5.0f;
 	private float m_size;
 
 	// Use this for initialization
@@ -45,7 +44,6 @@ public class ZoomScript : MonoBehaviour {
 				Mathf.Clamp(transform.position.x - delta.x,m_camera.orthographicSize,m_size + (m_size- m_camera.orthographicSize)),
 				Mathf.Clamp(transform.position.y - delta.y,m_camera.orthographicSize,m_size + (m_size- m_camera.orthographicSize)),
 				transform.position.z);
-			//transform.Translate(-delta.x * mouseSensitivity, -delta.y * mouseSensitivity, 0);
 			lastPosition = Input.mousePosition;
 		}
 	}

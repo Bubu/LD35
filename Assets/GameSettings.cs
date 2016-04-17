@@ -25,7 +25,7 @@ public class GameSettings : MonoBehaviour {
 	}
 
 	public void setCurPlayerIndex(int index){
-		curPlayerIndex = 
+		//curPlayerIndex = 
 	}
 
 	public void setPlayerAnimal(int[] list){

@@ -37,11 +37,8 @@ public class VoterGrid {
 	}
 
 	public void loadSprites(){
-		Texture2D tex1 = Resources.Load<Texture2D>("sprite_a");
-		Texture2D tex2 = Resources.Load<Texture2D>("sprite_b");
-		sprite_size = tex2.width;
-		sprite1 = Sprite.Create(tex1,new Rect(0,0,sprite_size,sprite_size),new Vector2(0,0),sprite_size);
-		sprite2 = Sprite.Create(tex2,new Rect(0,0,sprite_size,sprite_size),new Vector2(0,0),sprite_size);
+		sprite1 = GameConfig.Instance.spriteList[0];
+		sprite2 = GameConfig.Instance.spriteList[1];
 	}
 		
 
