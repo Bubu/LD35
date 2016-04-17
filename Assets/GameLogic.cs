@@ -14,9 +14,8 @@ public class GameLogic : MonoBehaviour {
 	public double ratio;
 	public GameSettings gs;
 
-	//new!!!
+	public List<GameObject> voterDistrictPlayer0;
 	public List<GameObject> voterDistrictPlayer1;
-	public List<GameObject> voterDistrictPlayer2;
 
 	// Use this for initialization
 	void Start () {
@@ -32,18 +31,15 @@ public class GameLogic : MonoBehaviour {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
 			GameObject textBox = GameObject.Find ("Score" + index);
 			button.SetActive (true);
-			districtList.Add(new District("District" + index, textBox, GameConfig.Instance.colorList[index]));
+			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index]));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
-			
-		//new!!!
 		for (int i = 0; i < 5; i++) {
-			voterDistrictPlayer1.Add (GameObject.Find ("1DistrictText"+i));
+			voterDistrictPlayer0.Add (GameObject.Find ("1DistrictText"+i));
+			voterDistrictPlayer0 [i].SetActive (false);
+			voterDistrictPlayer1.Add (GameObject.Find ("2DistrictText"+i));
 			voterDistrictPlayer1 [i].SetActive (false);
-			voterDistrictPlayer2.Add (GameObject.Find ("2DistrictText"+i));
-			voterDistrictPlayer2 [i].SetActive (false);
 		}
-
 	}
 
 
