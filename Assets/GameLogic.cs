@@ -13,17 +13,22 @@ public class GameLogic : MonoBehaviour {
 	public int x;
 	public double ratio;
 	public GameSettings gs;
-	public int mode;
 
 	public List<GameObject> voterDistrictPlayer0;
 	public List<GameObject> voterDistrictPlayer1;
 
-	// Use this for initialization
+	// Start of actual game here.
 	void Start () {
+		System.Random rnd = new System.Random ();
 		gs = GameObject.Find ("Initialize").GetComponent<GameSettings> ();
 		playerList = gs.playerList;
+		activePlayer = playerList[1];//rnd.Next(2)];
+		for(int i = 0; i<2; i++){
+			if(!playerList[i].isHuman){
+				playerList[i].ai = new AI(this);
+			}
+		}
 		x = gs.x;
-		mode = gs.mode;
 		ratio = gs.ratio;
 		GameObject.Destroy(GameObject.Find ("Initialize"));
 		voterGrid = new VoterGrid();
@@ -37,23 +42,37 @@ public class GameLogic : MonoBehaviour {
 			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index]));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
+		activeDistrict = districtList[0];
 		for (int i = 0; i < 5; i++) {
 			voterDistrictPlayer0.Add (GameObject.Find ("1DistrictText"+i));
 			voterDistrictPlayer0 [i].SetActive (false);
 			voterDistrictPlayer1.Add (GameObject.Find ("2DistrictText"+i));
 			voterDistrictPlayer1 [i].SetActive (false);
 		}
+		advanceTurn();
 	}
-
-
 
 	// Update is called once per frame
 	void Update () {
 	}
 
 	public void activateDistrict(int index){
+		foreach(var voter in activeDistrict.neighborSet){
+			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		}
 		activeDistrict = districtList [index];
 		GameObject.Find ("ActiveColor").GetComponent<Image> ().color = activeDistrict.color;
+		foreach(var voter in activeDistrict.neighborSet){
+			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+		}
+	}
+
+	public void advanceTurn(){
+		activePlayer = playerList[(activePlayer.index + 1) % 2];
+		if(!activePlayer.isHuman){
+			activePlayer.ai.doMove();
+			activePlayer = playerList[(activePlayer.index + 1) % 2];
+		}
 	}
 
 }

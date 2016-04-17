@@ -26,6 +26,7 @@ public class GameSettings : MonoBehaviour {
 		playerList = new List<Player>();
 		playerList.Add (new Player (0));
 		playerList.Add (new Player (1));
+		playerList[1].isHuman = false;
 		DontDestroyOnLoad (this);
 		startButton = GameObject.Find ("StartButton").GetComponent<Button>();
 		startButton.interactable = false;
@@ -75,9 +76,9 @@ public class GameSettings : MonoBehaviour {
 		ratio = gridSliderRatio.value/20;
 		gridSliderRatioText.text = "Ratio: " + ratio;
 	}
-	public void setMode(int mode) {
+	public void setMode(bool mode) {
 		// 0 = vs AI
 		// 1 = PvP
-		this.mode = mode;
+		this.playerList[1].isHuman = mode;
 	}
 }

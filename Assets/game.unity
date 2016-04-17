@@ -1292,7 +1292,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 407, y: 0}
+  m_AnchoredPosition: {x: 378, y: 0}
   m_SizeDelta: {x: 350, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &812674863
@@ -1913,6 +1913,9 @@ MonoBehaviour:
   x: 0
   ratio: 0
   gs: {fileID: 0}
+  mode: 0
+  voterDistrictPlayer0: []
+  voterDistrictPlayer1: []
 --- !u!4 &1160548550
 Transform:
   m_ObjectHideFlags: 0

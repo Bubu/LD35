@@ -9,6 +9,7 @@ public class District {
 	public int index;
 	public Color color;
 	public List<Voter> voterList;
+	public HashSet<Voter> neighborSet;
 	public List<int> counterList;
 	public GameObject textBox;
 	public GameLogic gl;
@@ -17,6 +18,7 @@ public class District {
 		this.color = color;
 		this.index = index;
 		this.voterList = new List<Voter>();
+		this.neighborSet = new HashSet<Voter>();
 		this.counterList = new List<int> ();
 		this.counterList.Add (0); //Counter Player A
 		this.counterList.Add (0); //Counter Player B

@@ -11,27 +11,44 @@ public class VoterScript : MonoBehaviour {
 	}
 
 	void OnMouseUp() {
-		if (gl.activeDistrict != null && voter.district == null) {
+		if (gl.activeDistrict != null && voter.district == null && gl.activePlayer.isHuman) {
+			List<Voter> neighborList = gl.voterGrid.getNeighbors (voter.col, voter.row);
 			if (gl.activeDistrict.voterList.Count == 0) {
-				addToDistrict ();
+				handleAction(neighborList);
 			} else {
-				List<Voter> list = gl.voterGrid.getNeighbors (voter.col, voter.row);
 				bool hasNeighbor = false;
-				foreach (var neighbor in list) {
+				foreach (var neighbor in neighborList) {
 					if (neighbor.district == gl.activeDistrict)
 						hasNeighbor = true;
 				}
 				if (hasNeighbor) {
-					addToDistrict ();
+					handleAction(neighborList);
 				}
 			}
 		}
 	}
 
-	void addToDistrict() {
+	public void handleAction(List<Voter> neighborList) {
+		addToDistrict ();
+		updateDistrictNeighbors(neighborList);
+		gl.advanceTurn();
+	}
+
+	private void updateDistrictNeighbors(List<Voter> neighbors){
+		foreach (var neighbor in neighbors) {
+			if (neighbor.district == null){
+				gl.activeDistrict.neighborSet.Add(neighbor);
+			} else {
+				neighbor.district.neighborSet.Remove(voter);
+			}
+		}
+	}
+
+	public void addToDistrict() {
 		SpriteRenderer renderer = GetComponent<SpriteRenderer> ();
 		renderer.color = gl.activeDistrict.color;
 		voter.district = gl.activeDistrict;
 		voter.district.updateCount (voter);
+		gl.voterGrid.freeVoterSet.Remove(voter);
 	}
 }

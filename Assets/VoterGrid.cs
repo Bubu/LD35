@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class VoterGrid {
 	private string name_obj;
 	public Voter[,] array;
+	public HashSet<Voter> freeVoterSet;
 	GameLogic gl;
 
 	private SpriteRenderer rend;
@@ -15,6 +16,7 @@ public class VoterGrid {
 		
 		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic>();
 		array = new Voter[gl.x, gl.x];
+		freeVoterSet = new HashSet<Voter>();
 		System.Random rnd = new System.Random ();
 		int sprite_size = GameConfig.Instance.sprite_size;
 		int numFirstAnimal = (int) Math.Round (gl.ratio * Math.Pow(gl.x,2));
@@ -35,6 +37,7 @@ public class VoterGrid {
 				int playerIndex = voterList[listIndex];
 				voterList.RemoveAt (listIndex);
 				array[i,j] = new Voter(i,j, sprite_size, gl.playerList[playerIndex]);
+				freeVoterSet.Add(array[i,j]);
 				remainingVoters--;
 			}
 		}
