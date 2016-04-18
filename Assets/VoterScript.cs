@@ -12,42 +12,42 @@ public class VoterScript : MonoBehaviour {
 
 	void OnMouseUp() {
 		if (gl.activeDistrict != null && voter.district == null && gl.activePlayer.isHuman) {
-			List<Voter> neighborList = gl.voterGrid.getNeighbors (voter.col, voter.row);
 			if (gl.activeDistrict.voterList.Count == 0) {
-				handleAction(neighborList);
+				handleMove(gl.activeDistrict);
 			} else {
 				bool hasNeighbor = false;
-				foreach (var neighbor in neighborList) {
+				foreach (var neighbor in gl.voterGrid.getNeighbors(voter)) {
 					if (neighbor.district == gl.activeDistrict)
 						hasNeighbor = true;
 				}
 				if (hasNeighbor) {
-					handleAction(neighborList);
+					handleMove(gl.activeDistrict);
 				}
 			}
 		}
 	}
 
-	public void handleAction(List<Voter> neighborList) {
-		addToDistrict ();
-		updateDistrictNeighbors(neighborList);
+	public void handleMove(District toDistrict) {
+		addToDistrict (toDistrict);
+		updateDistrictNeighbors(toDistrict);
 		gl.advanceTurn();
 	}
 
-	private void updateDistrictNeighbors(List<Voter> neighbors){
+	private void updateDistrictNeighbors(District toDistrict){
+		List<Voter> neighbors = gl.voterGrid.getNeighbors(voter);
 		foreach (var neighbor in neighbors) {
 			if (neighbor.district == null){
-				gl.activeDistrict.neighborSet.Add(neighbor);
+				toDistrict.neighborSet.Add(neighbor);
 			} else {
 				neighbor.district.neighborSet.Remove(voter);
 			}
 		}
 	}
 
-	public void addToDistrict() {
+	public void addToDistrict(District toDistrict) {
 		SpriteRenderer renderer = GetComponent<SpriteRenderer> ();
-		renderer.color = gl.activeDistrict.color;
-		voter.district = gl.activeDistrict;
+		renderer.color = toDistrict.color;
+		voter.district = toDistrict;
 		voter.district.updateCount (voter);
 		gl.voterGrid.freeVoterSet.Remove(voter);
 	}

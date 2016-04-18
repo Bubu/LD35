@@ -43,8 +43,11 @@ public class VoterGrid {
 		}
 	}
 		
-	public List<Voter> getNeighbors(int pos_x, int pos_y) {
+	public List<Voter> getNeighbors(Voter voter) {
 		List<Voter> list = new List<Voter>();
+
+		int pos_x = voter.col;
+		int pos_y = voter.row;
 
 		if (pos_x > 0)
 			list.Add (array [pos_x - 1, pos_y]);

@@ -14,7 +14,14 @@ public class District {
 	public GameObject textBox;
 	public GameLogic gl;
 
-	public District(int index, GameObject textBox, Color color){
+	public static District  copyFrom(District old){
+		District copy = new District(old.index, old.textBox,old.color,old.gl);
+		copy.voterList = new List<Voter>(old.voterList);
+		copy.neighborSet = new HashSet<Voter>(old.neighborSet);
+		return copy;
+	}
+
+	public District(int index, GameObject textBox, Color color, GameLogic gl){
 		this.color = color;
 		this.index = index;
 		this.voterList = new List<Voter>();
@@ -23,7 +30,7 @@ public class District {
 		this.counterList.Add (0); //Counter Player A
 		this.counterList.Add (0); //Counter Player B
 		this.textBox = textBox;
-		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic>();
+		this.gl = gl;
 	}
 
 	public void updateCount(Voter voter){

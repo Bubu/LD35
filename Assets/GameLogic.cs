@@ -10,6 +10,7 @@ public class GameLogic : MonoBehaviour {
 	public Player activePlayer;
 	public List<District> districtList;
 	public District activeDistrict;
+	public Image activeColor;
 	public int x;
 	public double ratio;
 	public GameSettings gs;
@@ -39,10 +40,11 @@ public class GameLogic : MonoBehaviour {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
 			GameObject textBox = GameObject.Find ("Score" + index);
 			button.SetActive (true);
-			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index]));
+			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index],this));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
 		activeDistrict = districtList[0];
+		activeColor = GameObject.Find ("ActiveColor").GetComponent<Image> ();
 		for (int i = 0; i < 5; i++) {
 			voterDistrictPlayer0.Add (GameObject.Find ("1DistrictText"+i));
 			voterDistrictPlayer0 [i].SetActive (false);
@@ -60,8 +62,27 @@ public class GameLogic : MonoBehaviour {
 		foreach(var voter in activeDistrict.neighborSet){
 			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 		}
+		foreach(var voter in voterGrid.freeVoterSet){
+			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		}
 		activeDistrict = districtList [index];
-		GameObject.Find ("ActiveColor").GetComponent<Image> ().color = activeDistrict.color;
+		activeColor.color = activeDistrict.color;
+
+		if (activeDistrict.neighborSet.Count == 0){
+			foreach(var voter in voterGrid.freeVoterSet){
+				voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+			}
+		} else {			
+			foreach(var voter in activeDistrict.neighborSet){
+				voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+			}
+		}
+	}
+
+	public void refreshPossibleMoves(){
+		foreach(var voter in voterGrid.freeVoterSet){
+			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		}
 		foreach(var voter in activeDistrict.neighborSet){
 			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
 		}
@@ -71,8 +92,8 @@ public class GameLogic : MonoBehaviour {
 		activePlayer = playerList[(activePlayer.index + 1) % 2];
 		if(!activePlayer.isHuman){
 			activePlayer.ai.doMove();
-			activePlayer = playerList[(activePlayer.index + 1) % 2];
 		}
+		refreshPossibleMoves();
 	}
 
 }
