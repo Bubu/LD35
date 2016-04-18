@@ -8,24 +8,24 @@ public class District {
 
 	public int index;
 	public Color color;
-	public List<Voter> voterList;
-	public HashSet<Voter> neighborSet;
+	public List<Tuple<int,int>> voterList;
+	public HashSet<Tuple<int,int>> neighborSet;
 	public List<int> counterList;
 	public GameObject textBox;
 	public GameLogic gl;
 
 	public static District  copyFrom(District old){
 		District copy = new District(old.index, old.textBox,old.color,old.gl);
-		copy.voterList = new List<Voter>(old.voterList);
-		copy.neighborSet = new HashSet<Voter>(old.neighborSet);
+		copy.voterList = new List<Tuple<int,int>>(old.voterList);
+		copy.neighborSet = new HashSet<Tuple<int,int>>(old.neighborSet);
 		return copy;
 	}
 
 	public District(int index, GameObject textBox, Color color, GameLogic gl){
 		this.color = color;
 		this.index = index;
-		this.voterList = new List<Voter>();
-		this.neighborSet = new HashSet<Voter>();
+		this.voterList = new List<Tuple<int,int>>();
+		this.neighborSet = new HashSet<Tuple<int,int>>();
 		this.counterList = new List<int> ();
 		this.counterList.Add (0); //Counter Player A
 		this.counterList.Add (0); //Counter Player B
@@ -34,7 +34,7 @@ public class District {
 	}
 
 	public void updateCount(Voter voter){
-		voterList.Add (voter);
+		voterList.Add (Tuple.New(voter.col,voter.row));
 		counterList [voter.player.index] += 1;
 		string scoreText = "" + counterList[0];
 		foreach (var count in counterList.Skip(1)) {

@@ -9,7 +9,7 @@ public class GameLogic : MonoBehaviour {
 	public List<Player> playerList;
 	public Player activePlayer;
 	public List<District> districtList;
-	public District activeDistrict;
+	public int activeDistrict;
 	public Image activeColor;
 	public int x;
 	public double ratio;
@@ -33,6 +33,7 @@ public class GameLogic : MonoBehaviour {
 		ratio = gs.ratio;
 		GameObject.Destroy(GameObject.Find ("Initialize"));
 		voterGrid = new VoterGrid();
+		voterGrid.initialize();
 		districtList = new List<District> ();
 		float size = GameConfig.Instance.sprite_size * x;
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().zoomTo(size);
@@ -43,7 +44,7 @@ public class GameLogic : MonoBehaviour {
 			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index],this));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
-		activeDistrict = districtList[0];
+		activeDistrict = 0;
 		activeColor = GameObject.Find ("ActiveColor").GetComponent<Image> ();
 		for (int i = 0; i < 5; i++) {
 			voterDistrictPlayer0.Add (GameObject.Find ("1DistrictText"+i));
@@ -59,32 +60,32 @@ public class GameLogic : MonoBehaviour {
 	}
 
 	public void activateDistrict(int index){
-		foreach(var voter in activeDistrict.neighborSet){
-			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		foreach(var voterIndex in districtList[activeDistrict].neighborSet){
+			voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 		}
-		foreach(var voter in voterGrid.freeVoterSet){
-			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		foreach(var voterIndex in voterGrid.freeVoterSet){
+			voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 		}
-		activeDistrict = districtList [index];
-		activeColor.color = activeDistrict.color;
+		activeDistrict = index;
+		activeColor.color = districtList[activeDistrict].color;
 
-		if (activeDistrict.neighborSet.Count == 0){
-			foreach(var voter in voterGrid.freeVoterSet){
-				voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+		if (districtList[activeDistrict].neighborSet.Count == 0){
+			foreach(var voterIndex in voterGrid.freeVoterSet){
+				voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
 			}
 		} else {			
-			foreach(var voter in activeDistrict.neighborSet){
-				voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+			foreach(var voterIndex in districtList[activeDistrict].neighborSet){
+				voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
 			}
 		}
 	}
 
 	public void refreshPossibleMoves(){
-		foreach(var voter in voterGrid.freeVoterSet){
-			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+		foreach(var voterIndex in voterGrid.freeVoterSet){
+			voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 		}
-		foreach(var voter in activeDistrict.neighborSet){
-			voter.bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
+		foreach(var voterIndex in districtList[activeDistrict].neighborSet){
+			voterGrid.array[voterIndex.First,voterIndex.Second].bgobj.GetComponent<SpriteRenderer>().color = new Color(0.75f,0.75f,0.75f);
 		}
 	}
 

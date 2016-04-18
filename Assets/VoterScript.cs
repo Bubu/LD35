@@ -11,9 +11,9 @@ public class VoterScript : MonoBehaviour {
 	}
 
 	void OnMouseUp() {
-		if (gl.activeDistrict != null && voter.district == null && gl.activePlayer.isHuman) {
-			if (gl.activeDistrict.voterList.Count == 0) {
-				handleMove(gl.activeDistrict);
+		if (gl.activeDistrict != null && voter.district == -1 && gl.activePlayer.isHuman) {
+			if (gl.districtList[gl.activeDistrict].voterList.Count == 0) {
+				handleMove(gl.districtList[gl.activeDistrict]);
 			} else {
 				bool hasNeighbor = false;
 				foreach (var neighbor in gl.voterGrid.getNeighbors(voter)) {
@@ -21,7 +21,7 @@ public class VoterScript : MonoBehaviour {
 						hasNeighbor = true;
 				}
 				if (hasNeighbor) {
-					handleMove(gl.activeDistrict);
+					handleMove(gl.districtList[gl.activeDistrict]);
 				}
 			}
 		}
@@ -36,10 +36,10 @@ public class VoterScript : MonoBehaviour {
 	private void updateDistrictNeighbors(District toDistrict){
 		List<Voter> neighbors = gl.voterGrid.getNeighbors(voter);
 		foreach (var neighbor in neighbors) {
-			if (neighbor.district == null){
-				toDistrict.neighborSet.Add(neighbor);
+			if (neighbor.district == -1){
+				toDistrict.neighborSet.Add(Tuple.New(neighbor.col,neighbor.row));
 			} else {
-				neighbor.district.neighborSet.Remove(voter);
+				gl.districtList[neighbor.district].neighborSet.Remove(Tuple.New(voter.col,voter.row));
 			}
 		}
 	}
@@ -47,8 +47,8 @@ public class VoterScript : MonoBehaviour {
 	public void addToDistrict(District toDistrict) {
 		SpriteRenderer renderer = GetComponent<SpriteRenderer> ();
 		renderer.color = toDistrict.color;
-		voter.district = toDistrict;
-		voter.district.updateCount (voter);
-		gl.voterGrid.freeVoterSet.Remove(voter);
+		voter.district = toDistrict.index;
+		gl.districtList[voter.district].updateCount (voter);
+		gl.voterGrid.freeVoterSet.Remove(Tuple.New(voter.col,voter.row));
 	}
 }

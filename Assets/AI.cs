@@ -15,12 +15,12 @@ public class AI
 		bool freeDistrictDone = false;
 		foreach(var district in gl.districtList){
 			if(district.voterList.Count == 0){
-				foreach(var neighbor in district.neighborSet){
-					simulateTurnWith(neighbor);
+				foreach(var neighborindex in district.neighborSet){
+					simulateTurnWith(neighborindex);
 				}
 			} else if(!freeDistrictDone) {
-				foreach(var freeVoter in gl.voterGrid.freeVoterSet){
-					simulateTurnWith(freeVoter);
+				foreach(var voterIndex in gl.voterGrid.freeVoterSet){
+					simulateTurnWith(voterIndex);
 				}
 				freeDistrictDone = true;
 			}
@@ -28,18 +28,17 @@ public class AI
 
 		int selectedDistrict = 0;
 		Voter selectedVoter = gl.voterGrid.array[2,2];
-		//gl.activateDistrict(selectedDistrict);
 		selectedVoter.bgobj.GetComponent<VoterScript>().handleMove(gl.districtList[selectedDistrict]);
 	}
 
-	private void simulateTurnWith(Voter voter){
+	private void simulateTurnWith(Tuple<int,int> voterIndex){
 		List<District> tempDistrictList = new List<District> (gl.districtList);
 		for(int i = 0; i< gl.districtList.Count; i++){
 			tempDistrictList[i] = District.copyFrom(gl.districtList[i]);
 		}
-		List<Voter> tempFreeVoterSet = new List<Voter> (gl.voterGrid.freeVoterSet);
+		List<Tuple<int,int>> tempFreeVoterSet = new List<Tuple<int,int>> (gl.voterGrid.freeVoterSet);
 
-
+		VoterGrid tempVotergrid = VoterGrid.copyFrom(gl.voterGrid);
 
 
 	}
