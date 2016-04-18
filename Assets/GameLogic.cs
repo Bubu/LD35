@@ -26,7 +26,7 @@ public class GameLogic : MonoBehaviour {
 		activePlayer = playerList[1];//rnd.Next(2)];
 		for(int i = 0; i<2; i++){
 			if(!playerList[i].isHuman){
-				playerList[i].ai = new AI(this);
+				playerList[i].ai = new AI(this, playerList[i]);
 			}
 		}
 		x = gs.x;
