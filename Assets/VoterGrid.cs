@@ -7,17 +7,19 @@ public class VoterGrid {
 	public Voter[,] array;
 	public HashSet<Tuple<int,int>> freeVoterSet;
 	GameLogic gl;
+	private int x;
 
 	private SpriteRenderer rend;
 
 	public static VoterGrid  copyFrom(VoterGrid old){
 		VoterGrid copy = new VoterGrid();
 		copy.array = old.array.Clone() as Voter[,];
-		for (int i = 0; i < gl.x; i++) {
-			for (int j = 0; j < gl.x; j++) {
-				array [i, j] = Voter.copyFrom(old.array[i,j]);
+		for (int i = 0; i < old.x; i++) {
+			for (int j = 0; j < old.x; j++) {
+				copy.array [i, j] = Voter.copyFrom(old.array[i,j]);
 			}
 		}
+		copy.x = old.x;
 		copy.freeVoterSet = new HashSet<Tuple<int,int>>(old.freeVoterSet);
 		return copy;
 	}
@@ -30,6 +32,7 @@ public class VoterGrid {
 	public void initialize ()
 	{
 		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic> ();
+		x = gl.x;
 		array = new Voter[gl.x, gl.x];
 		freeVoterSet = new HashSet<Tuple<int, int>> ();
 		System.Random rnd = new System.Random ();
