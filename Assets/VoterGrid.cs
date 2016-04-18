@@ -13,7 +13,11 @@ public class VoterGrid {
 	public static VoterGrid  copyFrom(VoterGrid old){
 		VoterGrid copy = new VoterGrid();
 		copy.array = old.array.Clone() as Voter[,];
-		//Todo Deep copy
+		for (int i = 0; i < gl.x; i++) {
+			for (int j = 0; j < gl.x; j++) {
+				array [i, j] = Voter.copyFrom(old.array[i,j]);
+			}
+		}
 		copy.freeVoterSet = new HashSet<Tuple<int,int>>(old.freeVoterSet);
 		return copy;
 	}

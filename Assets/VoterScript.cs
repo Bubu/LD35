@@ -11,7 +11,7 @@ public class VoterScript : MonoBehaviour {
 	}
 
 	void OnMouseUp() {
-		if (gl.activeDistrict != null && voter.district == -1 && gl.activePlayer.isHuman) {
+		if (voter.district == -1 && gl.activePlayer.isHuman) {
 			if (gl.districtList[gl.activeDistrict].voterList.Count == 0) {
 				handleMove(gl.districtList[gl.activeDistrict]);
 			} else {

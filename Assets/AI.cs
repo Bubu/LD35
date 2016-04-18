@@ -36,7 +36,7 @@ public class AI
 		for(int i = 0; i< gl.districtList.Count; i++){
 			tempDistrictList[i] = District.copyFrom(gl.districtList[i]);
 		}
-		List<Tuple<int,int>> tempFreeVoterSet = new List<Tuple<int,int>> (gl.voterGrid.freeVoterSet);
+
 
 		VoterGrid tempVotergrid = VoterGrid.copyFrom(gl.voterGrid);
 
