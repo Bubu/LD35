@@ -43,6 +43,12 @@ public class AI
 
 	}
 
+	private float score (List<Districts districtList>, Votergrid votergrid){
+		float score = 0;
+		return score;
+		
+	}
+
 //	private void addVoterToDistrict(Voter voter, District district, List<District> districtList, List<Voter> freeVoterSet){
 //		freeVoterSet.Remove(voter);
 //		List<Voter> neighbors = gl.voterGrid.getNeighbors(voter);
