@@ -13,10 +13,10 @@ public class ModeButton : MonoBehaviour {
 
 	void Update(){
 		if(gs.mode == 0){
-			theText.color = Color.gray;
+			//theText.color = Color.gray;
 		}
 		else{
-			theText.color = Color.black;
+			//theText.color = Color.black;
 		}
 	}
 }
