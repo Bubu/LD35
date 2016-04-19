@@ -16,6 +16,7 @@ public class GameSettings : MonoBehaviour {
 	public int curPlayerIndex;
 	public Button startButton;
 	public int mode;
+	public int[] playerSpriteIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,7 @@ public class GameSettings : MonoBehaviour {
 		DontDestroyOnLoad (this);
 		startButton = GameObject.Find ("StartButton").GetComponent<Button>();
 		startButton.interactable = false;
+		playerSpriteIndex = new int[2]{-1,-1};
 	}
 	
 	// Update is called once per frame
@@ -39,6 +41,7 @@ public class GameSettings : MonoBehaviour {
 		
 
 	public void setPlayer0Animal(int spriteIndex){
+		playerSpriteIndex[0] = spriteIndex;
 		playerList[0].sprite = GameConfig.Instance.spriteList[spriteIndex];
 		for (int button = 0; button < 6; button++) {
 			if (button == spriteIndex) {
@@ -54,6 +57,7 @@ public class GameSettings : MonoBehaviour {
 	}
 
 	public void setPlayer1Animal(int spriteIndex){
+		playerSpriteIndex[1] = spriteIndex;
 		playerList[1].sprite = GameConfig.Instance.spriteList[spriteIndex];
 		for (int button = 0; button < 6; button++) {
 			if (button == spriteIndex) {

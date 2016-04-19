@@ -11,17 +11,17 @@ public class District {
 	public List<Tuple<int,int>> voterList;
 	public HashSet<Tuple<int,int>> neighborSet;
 	public List<int> counterList;
-	public GameObject textBox;
+	public GameObject textBox0, textBox1;
 	public GameLogic gl;
 
 	public static District  copyFrom(District old){
-		District copy = new District(old.index, old.textBox,old.color,old.gl);
+		District copy = new District(old.index, old.textBox0, old.textBox1, old.color,old.gl);
 		copy.voterList = new List<Tuple<int,int>>(old.voterList);
 		copy.neighborSet = new HashSet<Tuple<int,int>>(old.neighborSet);
 		return copy;
 	}
 
-	public District(int index, GameObject textBox, Color color, GameLogic gl){
+	public District(int index, GameObject textBox0, GameObject textBox1, Color color, GameLogic gl){
 		this.color = color;
 		this.index = index;
 		this.voterList = new List<Tuple<int,int>>();
@@ -29,18 +29,17 @@ public class District {
 		this.counterList = new List<int> ();
 		this.counterList.Add (0); //Counter Player A
 		this.counterList.Add (0); //Counter Player B
-		this.textBox = textBox;
+		this.textBox0 = textBox0;
+		this.textBox1 = textBox1;
 		this.gl = gl;
 	}
 
 	public void updateCount(Voter voter){
 		voterList.Add (Tuple.New(voter.col,voter.row));
 		counterList [voter.player.index] += 1;
-		string scoreText = "" + counterList[0];
-		foreach (var count in counterList.Skip(1)) {
-			scoreText += " / " + count;
-		} 
-		textBox.GetComponent<Text> ().text = scoreText;
+
+		textBox0.GetComponent<Text> ().text = "" + counterList[0];
+		textBox1.GetComponent<Text> ().text = "" + counterList[1];
 
 		if (counterList [0] > counterList [1]) {
 			gl.voterDistrictPlayer0 [index].SetActive (true);

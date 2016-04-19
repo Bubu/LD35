@@ -24,11 +24,16 @@ public class GameLogic : MonoBehaviour {
 		gs = GameObject.Find ("Initialize").GetComponent<GameSettings> ();
 		playerList = gs.playerList;
 		activePlayer = playerList[1];//rnd.Next(2)];
+
+
 		for(int i = 0; i<2; i++){
+			GameObject.Find ("Player" + i + "Image" + 0).GetComponent<Image> ().sprite = playerList[i].sprite;
+			GameObject.Find ("Player" + i + "Image" + 1).GetComponent<Image> ().sprite = playerList[i].sprite;
 			if(!playerList[i].isHuman){
 				playerList[i].ai = new AI(this, playerList[i]);
 			}
 		}
+
 		x = gs.x;
 		ratio = gs.ratio;
 		GameObject.Destroy(GameObject.Find ("Initialize"));
@@ -39,13 +44,17 @@ public class GameLogic : MonoBehaviour {
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().zoomTo(size);
 		for (int index = 0; index < GameConfig.Instance.numberOfDistricts; index++) {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
-			GameObject textBox = GameObject.Find ("Score" + index);
+			GameObject textBox0 = GameObject.Find ("P" + 0 + "Score" + index);
+			GameObject textBox1 = GameObject.Find ("P" + 1 + "Score" + index);
 			button.SetActive (true);
-			districtList.Add(new District(index, textBox, GameConfig.Instance.colorList[index],this));
+			districtList.Add(new District(index, textBox0, textBox1, GameConfig.Instance.colorList[index],this));
 			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
 		}
+			
 		activeDistrict = 0;
 		activeColor = GameObject.Find ("ActiveColor").GetComponent<Image> ();
+		activateDistrict(0);
+
 		for (int i = 0; i < 5; i++) {
 			voterDistrictPlayer0.Add (GameObject.Find ("1DistrictText"+i));
 			voterDistrictPlayer0 [i].SetActive (false);
