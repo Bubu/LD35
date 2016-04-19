@@ -66,11 +66,11 @@ public class VoterGrid {
 
 		if (pos_x > 0)
 			list.Add (array [pos_x - 1, pos_y]);
-		if (pos_x < gl.x - 1)
+		if (pos_x < x - 1)
 			list.Add (array [pos_x + 1, pos_y]);
 		if (pos_y > 0)
 			list.Add (array [pos_x, pos_y - 1]);
-		if (pos_y < gl.x - 1)
+		if (pos_y < x - 1)
 			list.Add (array [pos_x, pos_y + 1]);
 		return list;
 	}

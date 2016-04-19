@@ -36,6 +36,14 @@ bgSprite = loadSprite("grid");
 		new Color (0.204f,0.482f,0.573f)
 	});
 
+	public List<String> districtNameList = new List<String> (new String [] {
+		"Catsburgh",
+		"Wulfcastle",
+		"Buffalo Beach",
+		"Lionsden",
+		"Carrotterdam"
+	});
+
 	public Sprite loadSprite(String spriteName){
 		Texture2D tex = Resources.Load<Texture2D>(spriteName);
 		Sprite sprite = Sprite.Create(tex,new Rect(0,0,sprite_size,sprite_size),new Vector2(0,0),sprite_size);

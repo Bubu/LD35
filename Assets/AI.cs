@@ -20,7 +20,7 @@ public class AI
 
 		bool freeDistrictDone = false;
 		foreach(var district in gl.districtList){
-			if(district.voterList.Count == 0){
+			if(district.voterList.Count > 0){
 				foreach(var neighborindex in district.neighborSet){
 					float score = simulateTurnWith(neighborindex, district);
 					if (score >= bestScore){
@@ -52,21 +52,30 @@ public class AI
 			tempDistrictList[i] = District.copyFrom(gl.districtList[i]);
 		}
 		VoterGrid tempVotergrid = VoterGrid.copyFrom(gl.voterGrid);
-		addVoterToDistrict(tempVotergrid.array[selectedVoterIndex.First,selectedVoterIndex.Second], selectedDistrict, tempDistrictList, tempVotergrid);
+		addVoterToDistrict(selectedVoterIndex, selectedDistrict.index, tempDistrictList, tempVotergrid);
 
-		Move enemyMove = selectMove(tempDistrictList,tempVotergrid, (player.index + 1)%2);
-		addVoterToDistrict(tempVotergrid.array[enemyMove.voterIndex.First,enemyMove.voterIndex.Second], enemyMove.district, tempDistrictList, tempVotergrid);
-		Move myMove = selectMove(tempDistrictList,tempVotergrid, player.index);
-		return myMove.score;
+		if (tempVotergrid.freeVoterSet.Count > 0) {
+			Move enemyMove = selectMove (tempDistrictList, tempVotergrid, (player.index + 1) % 2);
+			addVoterToDistrict (enemyMove.voterIndex, enemyMove.district.index, tempDistrictList, tempVotergrid);
+
+			if (tempVotergrid.freeVoterSet.Count > 0) {
+				Move myMove = selectMove (tempDistrictList, tempVotergrid, player.index);
+				return myMove.score;
+			} else {
+				return enemyMove.score;
+			}
+		} else {
+			return (float)0.5;
+		}
 	}
 
-	private float simulateSecondTurnWith(Tuple<int,int> selectedVoterIndex, District selectedDistrict, int playerIndex){
-		List<District> tempDistrictList = new List<District> (gl.districtList);
-		for(int i = 0; i< gl.districtList.Count; i++){
-			tempDistrictList[i] = District.copyFrom(gl.districtList[i]);
+	private float simulateSecondTurnWith(List<District> districtList, VoterGrid voterGrid, Tuple<int,int> selectedVoterIndex, int selectedDistrict, int playerIndex){
+		List<District> tempDistrictList = new List<District> (districtList);
+		for(int i = 0; i< districtList.Count; i++){
+			tempDistrictList[i] = District.copyFrom(districtList[i]);
 		}
-		VoterGrid tempVotergrid = VoterGrid.copyFrom(gl.voterGrid);
-		addVoterToDistrict(tempVotergrid.array[selectedVoterIndex.First,selectedVoterIndex.Second], selectedDistrict, tempDistrictList, tempVotergrid);
+		VoterGrid tempVotergrid = VoterGrid.copyFrom(voterGrid);
+		addVoterToDistrict(selectedVoterIndex, selectedDistrict, tempDistrictList, tempVotergrid);
 
 		return score(tempDistrictList, tempVotergrid, playerIndex);
 	}
@@ -77,12 +86,12 @@ public class AI
 		float bestScore=0;
 		District bestDistrict = null;
 		Tuple<int,int> bestVoterIndex = null;
-
+		List<float> scoreList = new List<float>();
 		foreach(var district in districtList){
-
-			if(district.voterList.Count == 0){
+			if(district.voterList.Count > 0){
 				foreach(var neighborindex in district.neighborSet){
-					float score = simulateSecondTurnWith(neighborindex, district, playerIndex);
+					float score = simulateSecondTurnWith(districtList, voterGrid, neighborindex, district.index, playerIndex);
+					scoreList.Add (score);
 					if (score >= bestScore){
 						bestScore = score;
 						bestDistrict = district;
@@ -91,7 +100,8 @@ public class AI
 				}
 			} else if(!freeDistrictDone) {
 				foreach(var voterIndex in voterGrid.freeVoterSet){
-					float score = simulateSecondTurnWith(voterIndex, district, playerIndex);
+					float score = simulateSecondTurnWith(districtList, voterGrid, voterIndex, district.index, playerIndex);
+					scoreList.Add (score);
 					if (score >= bestScore){
 						bestScore = score;
 						bestDistrict = district;
@@ -99,6 +109,12 @@ public class AI
 					}
 				}
 				freeDistrictDone = true;
+			}
+		}
+		if (bestDistrict == null) {
+			Debug.LogError ("No possible move for Player" + playerIndex);
+			foreach (var score in scoreList) {
+				Debug.Log (score);
 			}
 		}
 		return new Move(bestDistrict, bestVoterIndex, bestScore);
@@ -125,16 +141,20 @@ public class AI
 			if(diff>=1){
 				distScore = 1 - probability(totalNeighbors, neighborCounter[1], diff);
 			} else {
-				distScore = probability(totalNeighbors, neighborCounter[0], -diff+1);
+				distScore = (float)0.1*probability(totalNeighbors, neighborCounter[0], -diff+1);
 			}
 			score[0] += distScore;
+			if (distScore < -1)
+				Debug.Log ("First distScore: " + distScore);
 			//player 1
 			if(diff<=-1){
 				distScore = 1 - probability(totalNeighbors, neighborCounter[0], -diff);
 			} else {
-				distScore = probability(totalNeighbors, neighborCounter[1], diff+1);
+				distScore = (float)0.1*probability(totalNeighbors, neighborCounter[1], diff+1);
 			}
 			score[1] += distScore;
+			if (distScore < -1)
+				Debug.Log ("Second distScore: " + distScore);
 
 			neighborCountSum += district.neighborSet.Count;
 			neighborCountSqrdSum += Mathf.Pow(district.neighborSet.Count,2);
@@ -148,10 +168,10 @@ public class AI
 			}
 
 			float freePercentageP0 = (float)freeCounter[0]/(freeCounter[0]+freeCounter[1]);
-
 			score[0] += freePercentageP0*Mathf.Pow(neighborCountSum, 2)/neighborCountSqrdSum;
 			score[1] += (1 - freePercentageP0)*Mathf.Pow(neighborCountSum, 2)/neighborCountSqrdSum;
 		}
+
 		return score[playerIndex]/(score[playerIndex] + score[(playerIndex + 1) % 2]);
 	}
 
@@ -159,7 +179,7 @@ public class AI
 		float answ = 1;
 		if (k >= d){
 			for (int i = 0; i< d; i++){
-				answ *= (float)(k-i)/(n-1);
+				answ *= (float)(k-i)/(n-i);
 			}
 		}else{
 			answ = 0;
@@ -167,25 +187,20 @@ public class AI
 		return answ;
 	}
 
-	private void addVoterToDistrict(Voter voter, District district, List<District> districtList, VoterGrid voterGrid){
-		voter.district = district.index;
-		district.voterList.Add (Tuple.New(voter.col,voter.row));
-		voterGrid.freeVoterSet.Remove(Tuple.New(voter.col, voter.row));
+	private void addVoterToDistrict(Tuple<int,int> voterIndex, int district, List<District> districtList, VoterGrid voterGrid){
+		voterGrid.array[voterIndex.First,voterIndex.Second].district = district;
+		districtList[district].voterList.Add (voterIndex);
+		voterGrid.freeVoterSet.Remove(voterIndex);
 
-		List<Voter> neighbors = gl.voterGrid.getNeighbors(voter);
+		List<Voter> neighbors = voterGrid.getNeighbors(voterGrid.array[voterIndex.First,voterIndex.Second]);
 		foreach (var neighbor in neighbors) {
 			if (neighbor.district == -1){
-				district.neighborSet.Add(Tuple.New(neighbor.col,neighbor.row));
+				districtList[district].neighborSet.Add(Tuple.New(neighbor.col,neighbor.row));
 			} else {
-				districtList[neighbor.district].neighborSet.Remove(Tuple.New(voter.col,voter.row));
+				districtList[neighbor.district].neighborSet.Remove(voterIndex);
 			}
 		}
 	}
-		
-//
-//	public void addToDistrict(District toDistrict) {
-//		tempFreeVoterSet.Remove(voter);
-//	}
 
 }
 
