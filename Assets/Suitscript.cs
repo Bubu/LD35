@@ -22,7 +22,6 @@ public class Suitscript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 			player = 1;
 		}
 		id = int.Parse(this.name.Substring(this.name.Length - 1));
-		Debug.Log("look for " + begin + "Suit" + id);
 		this.suit = GameObject.Find(begin + "Suit" + id);
 		suit.SetActive(false);
 		entered = false;

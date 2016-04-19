@@ -721,7 +721,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 270, y: -94}
+  m_AnchoredPosition: {x: 270.8, y: 1}
   m_SizeDelta: {x: 824, y: 481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830206768
@@ -965,12 +965,10 @@ MonoBehaviour:
     the great work for this country, right?\n\nSo how can shaping election \ndistricts
     help you? \nNote, whoever wins in a district \nwins the hole district! Whoever
     \nwins the most districts wins the \nelection!\n\nThe next simple example might
-    help you to understand how shifting election districts might help you. ;-)\n\nIn
-    both cases there are as much wolfs as sheeps in the grid, but in the first case,
-    the first district has majority of sheep and the second a majority of wolfs. Either
-    wolf or sheep win one district.\n\nIn the second case, wolfs win due to a advantageous
-    shape of districts!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSo consider careful and watch
-    what your opponent is doing. Because in the end, one thing is sure: Gerry wins!\n"
+    help you to understand how shifting election districts might help you. ;-)\n\n\n\n\n\nIn
+    the second case, wolfs win due to a advantageous shape of districts!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSo
+    consider careful and watch what your opponent is doing. Because in the end, one
+    thing is sure: Gerry wins!\n"
 --- !u!222 &940412620
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1892,7 +1890,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 490.5, y: -331}
+  m_AnchoredPosition: {x: 426.8, y: -267.3}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1861059273
@@ -2122,7 +2120,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1365337345}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
