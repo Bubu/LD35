@@ -14,6 +14,7 @@ public class GameLogic : MonoBehaviour {
 	public int x;
 	public double ratio;
 	public GameSettings gs;
+	public GameObject endPanel;
 
 	public List<GameObject> voterDistrictPlayer0;
 	public List<GameObject> voterDistrictPlayer1;
@@ -33,7 +34,8 @@ public class GameLogic : MonoBehaviour {
 				playerList[i].ai = new AI(this, playerList[i]);
 			}
 		}
-
+		endPanel = GameObject.Find ("EndPanel");
+		endPanel.SetActive (false);
 		x = gs.x;
 		ratio = gs.ratio;
 		GameObject.Destroy(GameObject.Find ("Initialize"));
@@ -98,12 +100,33 @@ public class GameLogic : MonoBehaviour {
 		}
 	}
 
+	public void deactivateEndPanel(){
+		endPanel.SetActive (false);
+	}
+
 	public void advanceTurn(){
-		activePlayer = playerList[(activePlayer.index + 1) % 2];
-		if(!activePlayer.isHuman){
-			activePlayer.ai.doMove();
+		Debug.Log ("" + voterGrid.freeVoterSet.Count);
+		if (voterGrid.freeVoterSet.Count == 0) {
+			endPanel.SetActive (true);
+			if (playerList [0].districtSet.Count > playerList [1].districtSet.Count) {
+				Debug.Log (playerList [0].districtSet.Count + "  " + playerList [1].districtSet.Count);
+				GameObject.Find ("EndText").GetComponent<Text> ().text = "Player 1 wins!";
+			} else if (playerList [0].districtSet.Count < playerList [1].districtSet.Count) {
+				Debug.Log (playerList [0].districtSet.Count + "  " + playerList [1].districtSet.Count);
+				GameObject.Find ("EndText").GetComponent<Text> ().text = "Player 2 wins!";
+			} else {
+				Debug.Log (playerList [0].districtSet.Count + "  " + playerList [1].districtSet.Count);
+				GameObject.Find ("EndText").GetComponent<Text> ().text = "It's a draw!";
+			}
+
+		} else {
+
+			activePlayer = playerList [(activePlayer.index + 1) % 2];
+			if (!activePlayer.isHuman) {
+				activePlayer.ai.doMove ();
+			}
+			refreshPossibleMoves ();
 		}
-		refreshPossibleMoves();
 	}
 
 }

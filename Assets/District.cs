@@ -44,13 +44,20 @@ public class District {
 		if (counterList [0] > counterList [1]) {
 			gl.voterDistrictPlayer0 [index].SetActive (true);
 			gl.voterDistrictPlayer1 [index].SetActive (false);
+			gl.playerList[0].districtSet.Add (this);
+			gl.playerList[1].districtSet.Remove (this);
+
 		} else if (counterList [0] < counterList [1]) {
 			gl.voterDistrictPlayer1 [index].SetActive (true);
 			gl.voterDistrictPlayer0 [index].SetActive (false);
+			gl.playerList[1].districtSet.Add (this);
+			gl.playerList[0].districtSet.Remove (this);
 		}
 		else {
 			gl.voterDistrictPlayer0 [index].SetActive (false);
 			gl.voterDistrictPlayer1 [index].SetActive (false);
+			gl.playerList[0].districtSet.Remove (this);
+			gl.playerList[1].districtSet.Remove (this);
 		}
 	}
 }
