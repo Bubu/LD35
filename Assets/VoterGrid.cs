@@ -36,7 +36,7 @@ public class VoterGrid {
 		array = new Voter[gl.x, gl.x];
 		freeVoterSet = new HashSet<Tuple<int, int>> ();
 		System.Random rnd = new System.Random ();
-		int sprite_size = GameConfig.Instance.sprite_size;
+		int sprite_size = GameResources.Instance.sprite_size;
 		int numFirstAnimal = (int)Math.Round (gl.ratio * Math.Pow (gl.x, 2));
 		int numSecondAnimal = (int)Math.Pow (gl.x, 2) - numFirstAnimal;
 		List<int> voterList = new List<int> ();

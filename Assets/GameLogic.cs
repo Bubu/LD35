@@ -15,6 +15,7 @@ public class GameLogic : MonoBehaviour {
 	public double ratio;
 	public GameSettings gs;
 	public GameObject endPanel;
+	public AI refrenceAI;
 
 	public List<GameObject> voterDistrictPlayer0;
 	public List<GameObject> voterDistrictPlayer1;
@@ -30,8 +31,11 @@ public class GameLogic : MonoBehaviour {
 		for(int i = 0; i<2; i++){
 			GameObject.Find ("Player" + i + "Image" + 0).GetComponent<Image> ().sprite = playerList[i].sprite;
 			GameObject.Find ("Player" + i + "Image" + 1).GetComponent<Image> ().sprite = playerList[i].sprite;
-			if(!playerList[i].isHuman){
-				playerList[i].ai = new AI(this, playerList[i]);
+			if(!playerList[i].isHuman && i == 0){
+				playerList[i].ai = new GerryAI(this, playerList[i]);
+			} else if(!playerList[i].isHuman)  {
+				playerList[i].ai = new AI2(this, playerList[i]);
+				this.refrenceAI = new GerryAI(this, playerList[i]);
 			}
 		}
 		endPanel = GameObject.Find ("EndPanel");
@@ -42,15 +46,15 @@ public class GameLogic : MonoBehaviour {
 		voterGrid = new VoterGrid();
 		voterGrid.initialize();
 		districtList = new List<District> ();
-		float size = GameConfig.Instance.sprite_size * x;
+		float size = GameResources.Instance.sprite_size * x;
 		GameObject.Find("Main Camera").GetComponent<ZoomScript>().zoomTo(size);
-		for (int index = 0; index < GameConfig.Instance.numberOfDistricts; index++) {
+		for (int index = 0; index < GameResources.Instance.numberOfDistricts; index++) {
 			GameObject button = GameObject.Find ("DistrictButton" + index);
 			GameObject textBox0 = GameObject.Find ("P" + 0 + "Score" + index);
 			GameObject textBox1 = GameObject.Find ("P" + 1 + "Score" + index);
 			button.SetActive (true);
-			districtList.Add(new District(index, textBox0, textBox1, GameConfig.Instance.colorList[index],this));
-			button.GetComponent<Image>().color = GameConfig.Instance.colorList [index];
+			districtList.Add(new District(index, textBox0, textBox1, GameResources.Instance.colorList[index],this));
+			button.GetComponent<Image>().color = GameResources.Instance.colorList [index];
 		}
 			
 		activeDistrict = 0;
@@ -105,7 +109,6 @@ public class GameLogic : MonoBehaviour {
 	}
 
 	public void advanceTurn(){
-		Debug.Log ("" + voterGrid.freeVoterSet.Count);
 		if (voterGrid.freeVoterSet.Count == 0) {
 			endPanel.SetActive (true);
 			if (playerList [0].districtSet.Count > playerList [1].districtSet.Count) {
@@ -123,6 +126,8 @@ public class GameLogic : MonoBehaviour {
 
 			activePlayer = playerList [(activePlayer.index + 1) % 2];
 			if (!activePlayer.isHuman) {
+				Move referenceMove = this.refrenceAI.findBestMove(this.districtList, this.voterGrid, activePlayer.index, 0);
+				Debug.Log("Reference AI would chose: " + referenceMove);
 				activePlayer.ai.doMove ();
 			}
 			refreshPossibleMoves ();

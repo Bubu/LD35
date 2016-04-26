@@ -2,69 +2,72 @@
 using System;
 using System.Collections.Generic;
 
-public class AII
+public class AI2 : AI
 {
-	private GameLogic gl;
-	private Player player;
-	private int searchSteps;
-
-	public AII (GameLogic gl, Player player)
-	{
-		this.gl = gl;
-		this.player = player;
-		this.searchSteps = 100;
+	private int targetDepth;
+	public AI2(GameLogic gl, Player player):base(gl, player){
+		this.targetDepth = 2;
 	}
 
-	private Move findBestMove(List<District> districtList, VoterGrid voterGrid, int playerIndex){
+	public override Move findBestMove(List<District> districtList, VoterGrid voterGrid, int playerIndex, int depth, String logString = ""){
 
 		Move bestMove = new Move (null, null, 0);
-		bool finished = false;
+		bool freeSetDone = false;
+		HashSet<Tuple<int,int>> voterIndexSet;
 
 		// Do loop over possible districts
 		foreach (var district in gl.districtList) {
 			if (district.voterList.Count > 0) {
-				HashSet<Voter> voterIndexSet = district.neighborSet;
+				voterIndexSet = district.neighborSet;
 			} else {
-				HashSet<Voter> voterIndexSet = gl.voterGrid.freeVoterSet;
-				finished = true;
+				voterIndexSet = gl.voterGrid.freeVoterSet;
 			}
 
-			foreach (var voterIndex in voterIndexSet) {
-				float score = scoreThisMove (voterIndex, district, districtList, voterGrid, playerIndex);
-				if (score >= bestMove.score) {
-					bestMove = new Move (district, voterIndex, score);
+			if (!freeSetDone || district.voterList.Count > 0){
+				foreach (var voterIndex in voterIndexSet) {
+					float score = scoreThisMove (voterIndex, district.index, districtList, voterGrid, playerIndex, depth + 1);
+					if (score >= bestMove.score) {
+						bestMove = new Move (district, voterIndex, score);
+					}
 				}
 			}
-			if (finished) break;
+			if (district.voterList.Count == 0) {
+					freeSetDone = true;
+			}
 		}
+		//if (logString != "") Debug.Log(logString);
+		//Debug.Log("Best move at depth "+ depth + " for player " + playerIndex + " is (" + bestMove.voterIndex.First + "," + bestMove.voterIndex.Second + ", " + bestMove.district.index + ") with score " + bestMove.score);
+		return bestMove;
 	}
 	 
-	private float scoreThisMove(Tuple<int,int> selVoterIndex, District selDistrict, List<District> districtList, VoterGrid voterGrid, int playerIndex){
+	private float scoreThisMove(Tuple<int,int> selVoterIndex, int selDistrict, List<District> districtList, VoterGrid voterGrid, int playerIndex, int depth){
 		// 1. Copy game situation:
 		List<District> tempDistrictList = new List<District> (districtList);
 		for(int i = 0; i < districtList.Count; i++){
-			tempDistrictList[i] = District.copyFrom(gl.districtList[i]);
+			tempDistrictList[i] = District.copyFrom(districtList[i]);
 		}
-		VoterGrid tempVotergrid = VoterGrid.copyFrom(gl.voterGrid);
+		VoterGrid tempVotergrid = VoterGrid.copyFrom(voterGrid);
+
+		float score; // score /elem [0,1], 0 = worst Score.
 
 		// 2. Simulate Move:
 		addVoterToDistrict (selVoterIndex, selDistrict, tempDistrictList, tempVotergrid);
 
-		if (playerIndex == player.index && searchSteps > 0) {
+		if (playerIndex == player.index && depth < this.targetDepth) {
 			// 3. Select Best Enemy Move:
-			Move enemyMove = findBestMove (tempDistrictList, tempVotergrid, (playerIndex + 1) % 2);
+			Move enemyMove = findBestMove (tempDistrictList, tempVotergrid, (playerIndex + 1) % 2, depth, "My Move is: (" + selVoterIndex.First + "," + selVoterIndex.Second + ", " + selDistrict + ")");
 
 			// 4. Simulate best Enemy Move:
-			addVoterToDistrict (enemyMove.voterIndex, enemyMove.district, tempDistrictList, tempVotergrid);
+			addVoterToDistrict (enemyMove.voterIndex, enemyMove.district.index, tempDistrictList, tempVotergrid);
 
 			// 5. Select best own Move:
-			Move ownMove = findBestMove (tempDistrictList, tempVotergrid, playerIndex);
-			float score = ownMove.score;
+			Move ownMove = findBestMove (tempDistrictList, tempVotergrid, playerIndex, depth);
+			score = ownMove.score;
 
 		} else {
 
 			// 3. Score this situation for the player
-			float score = scoreSituation(tempDistrictList, tempVotergrid, playerIndex);
+			score = scoreSituation(tempDistrictList, tempVotergrid, playerIndex);
 		}
 		return score;
 	}
@@ -122,6 +125,19 @@ public class AII
 		}
 
 		return score[playerIndex]/(score[playerIndex] + score[(playerIndex + 1) % 2]);
+	}
+
+
+	private float probability(int n, int k, int d){
+		float answ = 1;
+		if (k >= d){
+			for (int i = 0; i< d; i++){
+				answ *= (float)(k-i)/(n-i);
+			}
+		}else{
+			answ = 0;
+		}
+		return answ;
 	}
 
 	private void addVoterToDistrict(Tuple<int,int> voterIndex, int district, List<District> districtList, VoterGrid voterGrid){

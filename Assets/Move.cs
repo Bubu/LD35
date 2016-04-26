@@ -14,6 +14,11 @@ public class Move
 		this.voterIndex = voterIndex;
 		this.score = score;
 	}
+
+	public override string ToString()
+	{
+		return voterIndex +" D:"+ district.index +" S:" +score;
+	}
 }
 
 

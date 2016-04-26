@@ -45,6 +45,11 @@ public class Tuple<T1, T2>
 	{
 		return First.GetHashCode() ^ Second.GetHashCode();
 	}
+
+	public override string ToString()
+	{
+		return "(" + First + ", " + Second + ")";
+	}
 }
 
 public static class Tuple

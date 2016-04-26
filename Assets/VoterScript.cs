@@ -6,7 +6,7 @@ public class VoterScript : MonoBehaviour {
 	GameLogic gl;
 	public Voter voter;
 
-	void Start () {
+	void Awake () {
 		gl = GameObject.Find ("GameLogic").GetComponent<GameLogic>();
 	}
 

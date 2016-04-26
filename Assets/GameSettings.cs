@@ -42,7 +42,7 @@ public class GameSettings : MonoBehaviour {
 
 	public void setPlayer0Animal(int spriteIndex){
 		playerSpriteIndex[0] = spriteIndex;
-		playerList[0].sprite = GameConfig.Instance.spriteList[spriteIndex];
+		playerList[0].sprite = GameResources.Instance.spriteList[spriteIndex];
 		for (int button = 0; button < 6; button++) {
 			if (button == spriteIndex) {
 				GameObject.Find ("BButton" + button).GetComponent<Button> ().interactable = false;
@@ -58,7 +58,7 @@ public class GameSettings : MonoBehaviour {
 
 	public void setPlayer1Animal(int spriteIndex){
 		playerSpriteIndex[1] = spriteIndex;
-		playerList[1].sprite = GameConfig.Instance.spriteList[spriteIndex];
+		playerList[1].sprite = GameResources.Instance.spriteList[spriteIndex];
 		for (int button = 0; button < 6; button++) {
 			if (button == spriteIndex) {
 				GameObject.Find ("AButton" + button).GetComponent<Button> ().interactable = false;
@@ -80,9 +80,20 @@ public class GameSettings : MonoBehaviour {
 		ratio = gridSliderRatio.value/20;
 		gridSliderRatioText.text = "Ratio: " + ratio;
 	}
-	public void setMode(bool mode) {
-		// 0 = vs AI
-		// 1 = PvP
-		this.playerList[1].isHuman = mode;
+	public void setMode(int mode) {
+		// 0 = PvP
+		// 1 = PvAI
+		// 2 = AIvAI
+		if (mode == 0){
+			this.playerList[0].isHuman = true;
+			this.playerList[1].isHuman = true;
+		}
+		else if (mode == 1){
+			this.playerList[0].isHuman = true;
+			this.playerList[1].isHuman = false;
+		}else if (mode == 2){
+			this.playerList[0].isHuman = false;
+			this.playerList[1].isHuman = false;
+		}
 	}
 }

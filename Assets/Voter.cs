@@ -30,7 +30,7 @@ public class Voter {
 		bgobj.transform.position = new Vector3 ((float)x * size, (float)y * size, 0);
 		bgobj.transform.localScale = new Vector3 (size, size, 1);
 		SpriteRenderer rend = bgobj.AddComponent<SpriteRenderer> ();
-		rend.sprite = GameConfig.Instance.bgSprite;
+		rend.sprite = GameResources.Instance.bgSprite;
 		rend.sortingOrder = -1;
 		bgobj.AddComponent<BoxCollider2D> ();
 		bgobj.GetComponent<BoxCollider2D> ().offset = new Vector2 (0.5f, 0.5f);

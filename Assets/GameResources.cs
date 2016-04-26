@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System;
 
-public class GameConfig
+public class GameResources
 {
-	public static GameConfig instance;
-	private GameConfig (){	
+	public static GameResources instance;
+	private GameResources (){	
 		spriteList = new List<Sprite> (new Sprite [] {
 			loadSprite ("sheep"),
 			loadSprite ("wolf"),
@@ -16,10 +16,10 @@ public class GameConfig
 });
 bgSprite = loadSprite("grid");
 }
-	public static GameConfig Instance {
+	public static GameResources Instance {
 		get {
 			if (instance == null) {
-				instance = new GameConfig ();
+				instance = new GameResources ();
 			}
 			return instance;
 		}
