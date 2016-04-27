@@ -123,7 +123,6 @@ public class GameLogic : MonoBehaviour {
 			}
 
 		} else {
-
 			activePlayer = playerList [(activePlayer.index + 1) % 2];
 			if (!activePlayer.isHuman) {
 				Move referenceMove = this.refrenceAI.findBestMove(this.districtList, this.voterGrid, activePlayer.index, 0);
